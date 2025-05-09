@@ -1,6 +1,75 @@
+/* https://coolors.co/palette/286295-4c96d7-a6d5ff-eeeeee */
+:root {
+  --primary-color: #286295;
+  --secondary-color: #4c96d7;
+  --accent-color1: #a6d5ff;
+  --accent-color2: #eeeeee;
+
+  --small-size: 1rem;
+  --medium-size: 1.5rem;
+  --large-size: 2rem;
+  --massive-size: 5rem;
+}
+
 /******* Change Box Model ***************/
 *,
 *:before,
 *:after {
+  margin: 0px;
+  padding: 0px;
   box-sizing: border-box;
 }
+
+body {
+  font-family: "Roboto", sans-serif;
+  line-height: 1.5em;
+}
+
+ul {
+  list-style: none;
+}
+
+/*********************************
+ *********** HEADER STYLING ******
+ *********************************/
+header {
+  padding: var(--large-size) var(--small-size);
+}
+
+#top-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+#top-header a {
+  color: #000;
+  text-decoration: none;
+}
+
+#top-header .siteName{
+  font-size: 2rem;
+}
+
+/*************************************
+ ******** NAVIGATION STYLING *********
+ *************************************/
+nav{
+  background-color: #000;
+  padding: var(--small-size);
+  color: #fff;
+}
+
+nav ul{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+/*************************************
+ ******** FOOTER STYLING *********
+ *************************************/
+ footer{
+  padding: var(--small-size);
+ }

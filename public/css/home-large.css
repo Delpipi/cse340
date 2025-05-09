@@ -1,0 +1,52 @@
+body {
+  background: url("/images/site/small_check.png") no-repeat center center /
+    cover;
+    padding: var(--small-size);
+}
+
+#wrapper{
+  width: 60%;
+  background-color: #fff;
+  border: 5px solid var(--secondary-color);
+  border-radius: 10px;
+  margin: 0 auto;
+}
+
+/*************************************
+ ******** MAIN STYLING *************
+ *************************************/
+main {
+  padding: var(--large-size);
+}
+
+/*====== header styling ===========*/
+.header .overlay {
+  position: absolute;
+  top: 20%;
+}
+
+.header .overlay h2 {
+  font-size: 2rem;
+}
+
+.header .overlay p {
+  font-size: 1.5rem;
+  padding-top: var(--small-size);
+}
+
+.header .overlay img {
+  width: 150px;
+  height: auto;
+  margin-top: var(--large-size);
+}
+
+ /*====== content styling ===========*/
+.content {
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "upgrades reviews";
+  gap: 50px;
+}
+
+.content section h3 {
+  margin-bottom: var(--large-size);
+}
