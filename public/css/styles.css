@@ -58,13 +58,73 @@ header {
 nav{
   background-color: #000;
   padding: var(--small-size);
-  color: #fff;
 }
 
 nav ul{
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+nav ul li > a{
+  color: #fff;
+  text-decoration: none;
+}
+
+/*************************************
+ ******** MAIN STYLING *************
+ *************************************/
+main {
+  padding: var(--small-size);
+}
+
+/*====== header styling ===========*/
+.header {
+  position: relative;
+  margin-bottom: var(--large-size);
+}
+
+.header picture img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.header .overlay {
+  background-color: rgba(255, 255, 255, 0.4);
+  color: var(--primary-color);
+  position: absolute;
+  top: 50px;
+}
+
+.header .overlay img {
+  width: 100px;
+  height: auto;
+}
+
+
+@media screen and (min-width: 768px){
+  body {
+      background: url("/images/site/small_check.png") no-repeat center center / cover;
+      padding: var(--small-size);
+    }
+  
+    #wrapper {
+      width: 60%;
+      background-color: #fff;
+      border: 5px solid var(--secondary-color);
+      border-radius: 10px;
+      margin: 0 auto;
+    }
+  
+    /*************************************
+     ******** MAIN STYLING *************
+     *************************************/
+    main {
+      padding: var(--large-size); 
+    }
 }
 
 /*************************************

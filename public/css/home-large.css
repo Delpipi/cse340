@@ -1,23 +1,6 @@
-body {
-  background: url("/images/site/small_check.png") no-repeat center center /
-    cover;
-    padding: var(--small-size);
-}
-
-#wrapper{
-  width: 60%;
-  background-color: #fff;
-  border: 5px solid var(--secondary-color);
-  border-radius: 10px;
-  margin: 0 auto;
-}
-
 /*************************************
  ******** MAIN STYLING *************
  *************************************/
-main {
-  padding: var(--large-size);
-}
 
 /*====== header styling ===========*/
 .header .overlay {
