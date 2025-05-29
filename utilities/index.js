@@ -28,7 +28,7 @@ Util.buildClassificationGrid = async (data) => {
         grid = '<ul id="inv-display">'
         data.forEach(vehicle => {
             grid += '<li>'
-            grid += '<a href="../../inv/detail' + vehicle.inv_id
+            grid += '<a href="../../inv/detail/' + vehicle.inv_id
                 + '" title="View ' + vehicle.inv_make + ' ' + vehicle.inv_model
                 + ' details"> <img src="' + vehicle.inv_thumbnail
                 + '" alt="Image of ' + vehicle.inv_make + ' ' + vehicle.inv_model
@@ -36,7 +36,7 @@ Util.buildClassificationGrid = async (data) => {
             grid += '<div class="namePrice">'
             grid += '<hr/>'
             grid += '<h2>'
-            grid += '<a href="../../inv/detail' + vehicle.inv_id
+            grid += '<a href="../../inv/detail/' + vehicle.inv_id
                 + '" title="View' + vehicle.inv_make + ' ' + vehicle.inv_model
                 + ' details"> ' + vehicle.inv_make + ' ' + vehicle.inv_model + '</a>'
             grid += '</h2>'
@@ -49,6 +49,24 @@ Util.buildClassificationGrid = async (data) => {
     } else {
         grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
     }
+    return grid
+}
+
+/* **************************************
+* Build the inventory item details view HTML
+* ************************************ */
+Util.buildInventoryItemDetailsGrid = async function name(vehicle) {
+    let grid
+   
+        grid = '<div class="details">'
+        grid += '<img src="' + vehicle.inv_image + '" alt="' + vehicle.inv_make + ' ' + vehicle.inv_model + '" loading="lazy">'
+        grid += '<h2>' + vehicle.inv_make + ' ' + vehicle.inv_model + ' Details</h2>'
+        grid += '<p class="price">Price: $' + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</p>'
+        grid += '<p class="desc"><b>Description</b>: ' + vehicle.inv_description + '</p>'
+        grid += '<p class="color">Color: ' + vehicle.inv_color + '</p>'
+        grid += '<p class="miles"><b>Miles</b>: ' + new Intl.NumberFormat('en-US').format(vehicle.inv_miles) + '</p>'
+        grid += '</div>'
+    
     return grid
 }
 

@@ -1,0 +1,9 @@
+.details {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+        "image title"
+        "image price"
+        "image desc"
+        "image color"
+        "image miles";
+}
