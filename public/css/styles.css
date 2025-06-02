@@ -29,6 +29,40 @@ ul {
   list-style: none;
 }
 
+#messages{
+  margin: 1rem 0px;
+}
+
+#messages ul{
+  padding: 1rem;
+}
+
+#messages ul li{
+  font-size: 1.2rem;
+}
+
+#messages ul.notice{
+  background-color: #007bff;
+}
+
+#messages ul.error {
+  background-color: #ff0000;
+}
+
+#messages ul li::before {
+  font-size: 1.5rem;
+}
+
+#messages ul.notice li::before{
+  content: '🛈';
+}
+
+#messages ul.error li::before {
+  content: '🚫';
+}
+
+
+
 /*********************************
  *********** HEADER STYLING ******
  *********************************/

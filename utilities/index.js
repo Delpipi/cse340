@@ -70,6 +70,20 @@ Util.buildInventoryItemDetailsGrid = async function name(vehicle) {
     return grid
 }
 
+Util.buildLoginGrid = async (req, res, next) => {
+    let grid
+    grid = '<div class="login">'
+    grid += '<form action="#" method="POST" id="loginForm">'
+    grid += '<label for="account_email"> Email<input type="email" name="account_email" id="account_email" required></label>'
+    grid += '<label for="account_password"> Password<input type="password" name="account_password" id="account_password" required></label>'
+    grid += '<input type="submit" value="login">'
+    grid += '</form>'
+    grid += '<p>No account? <a href="/account/register">Sign-up</a></p>'
+    grid += '</div>'
+    
+    return grid
+}
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 

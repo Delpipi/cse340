@@ -21,7 +21,7 @@
     background-color: rgba(255, 255, 255, 0.4);
     color: var(--primary-color);
     position: absolute;
-    top: 50px;
+    top: 100px;
  }
 
 .header .overlay img {
