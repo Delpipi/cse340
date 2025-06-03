@@ -1,0 +1,99 @@
+/*************************************
+ ******** MAIN STYLING *************
+ *************************************/
+main {
+    padding: var(--small-size);
+}
+
+main h1{
+    margin-bottom: 2rem;
+}
+
+/* ===== error style =====*/
+ul.notice{
+    list-style: square;
+    color: #ff0000;
+    padding: 1rem;
+    font-weight: 600;
+}
+
+/* ===== form style ====== */
+.container{
+    background-color: var(--primary-color);
+    padding: 1rem;
+    margin: 0 auto;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 0.4rem;
+}
+
+#submittedForm label{
+    display: block;
+    color: #fff;
+    margin-top: 1rem;
+}
+
+#submittedForm input[type="text"],
+#submittedForm input[type="email"], 
+#submittedForm input[type="password"]{
+    display: block;
+    color: #fff;
+    width: 100%;
+    padding: 0.5rem;
+    border: none;
+    color: #000;
+    font-size: 1rem;
+    border-radius: 0.2rem;
+}
+
+#submittedForm input[required] {
+    border-left: 3px solid #ff0000;
+}
+
+#submittedForm input:focus{
+   outline: none;
+}
+
+#submittedForm input:required:invalid,  #submittedForm input:focus{
+    background-image: url(/images/site/invalid.png);
+    background-position: right top;
+    background-repeat: no-repeat;
+}
+
+#submittedForm input:required:valid{
+    background-image: url(/images/site/valid.png);
+    background-position: right top;
+    background-repeat: no-repeat;
+}
+
+#submittedForm input[type="submit"]{
+    display: block;
+    padding: 0.4rem 2rem;
+    border-radius: 2rem;
+    text-transform: uppercase;
+    border: none;
+    margin: 1rem auto;
+}
+
+#submittedForm input[type="submit"]:hover{
+    cursor: pointer;
+}
+
+.container p{
+    text-align: center;
+}
+
+.container p, .container p > a  {
+    color: #fff;
+}
+
+
+label span{
+    display: block;
+    text-decoration: underline;
+    font-size: 0.8rem;
+}
+
+span#pswdBtn:hover{
+    cursor: pointer;
+}

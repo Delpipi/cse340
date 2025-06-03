@@ -22,6 +22,7 @@ const accountRoute = require("./routes/accountRoute")
 const errorRoute = require("./routes/errorRoute")
 
 const baseController = require("./controllers/baseController")
+const bodyParser = require("body-parser")
 
 
 /* *************************************
@@ -55,6 +56,10 @@ app.use(function (req, res, next) {
   res.locals.messages = require('express-messages')(req, res)
   next()
 })
+
+//Aware collect value from request body functionality
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: true}))
 
 /* ***********************
  * Routes

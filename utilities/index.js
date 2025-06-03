@@ -1,6 +1,7 @@
 const invModel = require("../models/inventory-model")
 const Util = {}
 
+
 /* ************************
  * Constructs the nav HTML unordered list
  ************************** */
@@ -70,12 +71,15 @@ Util.buildInventoryItemDetailsGrid = async function name(vehicle) {
     return grid
 }
 
-Util.buildLoginGrid = async (req, res, next) => {
+/* **************************************
+* Build the login view HTML
+* ************************************ */
+/* Util.buildLoginGrid = async (req, res, next) => {
     let grid
-    grid = '<div class="login">'
-    grid += '<form action="#" method="POST" id="loginForm">'
-    grid += '<label for="account_email"> Email<input type="email" name="account_email" id="account_email" required></label>'
-    grid += '<label for="account_password"> Password<input type="password" name="account_password" id="account_password" required></label>'
+    grid = '<div class="container">'
+    grid += '<form action="#" method="POST" id="submittedForm">'
+    grid += '<label for="account_email"> Email *<input type="email" name="account_email" id="account_email" required></label>'
+    grid += '<label for="account_password"> Password *<input type="password" name="account_password" id="account_password" required><span id="pswdBtn">show password</span></label>'
     grid += '<input type="submit" value="login">'
     grid += '</form>'
     grid += '<p>No account? <a href="/account/register">Sign-up</a></p>'
@@ -83,7 +87,26 @@ Util.buildLoginGrid = async (req, res, next) => {
     
     return grid
 }
-
+ */
+/* **************************************
+* Build the registration view HTML
+* ************************************ */
+/* Util.buildRegistrationGrid = async (req, res, next) => {
+    let grid
+    grid = '<div class="container">'
+    grid += '<form action="#" method="POST" id="submittedForm">'
+    grid += '<label for="account_firstname"> First name *<input type="text" name="account_firstname" id="account_firstname" required></label>'
+    grid += '<label for="account_lastname"> Last name *<input type="text" name="account_lastname" id="account_lastname" required></label>'
+    grid += '<label for="account_email"> Email *<input type="email" name="account_email" id="account_email" required></label>'
+    grid += '<label for="account_password"> Password *<input type="password" name="account_password" id="account_password" required><span id="pswdBtn">show password</span></label>'
+    grid += '<input type="submit" value="Register">'
+    grid += '</form>'
+    grid += '<p>Have account? <a href="/account/login">Sing-in</a></p>'
+    grid += '</div>'
+    
+    return grid
+}
+ */
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 
