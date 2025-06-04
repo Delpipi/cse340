@@ -12,8 +12,20 @@ const accountCont = require('../controllers/accountController')
 
 //Deliver login
 router.get('/login', utilities.handleErrors(accountCont.buildLogin))
+
 //Deliver registration
 router.get('/register', utilities.handleErrors(accountCont.buildRegistration))
+
+//Deliver login
+router.post('/login', 
+    regValidate.loginRules(),
+    regValidate.checkLogData,
+    (req, res) => {
+        res.status(200).send('login process')
+    }
+)
+
+//Regiser account
 router.post('/register',
     regValidate.registrationRules(),
     regValidate.checkRegData,

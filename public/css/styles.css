@@ -41,12 +41,8 @@ ul {
   font-size: 1.2rem;
 }
 
-#messages ul.notice{
-  background-color: #007bff;
-}
-
-#messages ul.error {
-  background-color: #ff0000;
+#messages > ul.error{
+  background-color: rgba(255, 0, 0, 0.1);
 }
 
 #messages ul li::before {

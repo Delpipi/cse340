@@ -1,8 +1,35 @@
 //Need Resources
 const utilities = require(".")
 const { body, validationResult } = require("express-validator")
+const accountModel = require("../models/account-model")
 
 const validate = {}
+
+/*  **********************************
+  *  Registration Data Validation Rules
+  * ********************************* */
+validate.loginRules = () => {
+    //valid email is required
+    return [
+        body("account_email")
+        .trim()
+        .isEmail()
+        .normalizeEmail()
+        .withMessage("A valid email is required."),
+    
+    //Password is required and must be strong
+    body("account_password")
+        .trim()
+        .isStrongPassword({
+            minLength: 12,
+            minLowercase: 1,
+            minUppercase: 1,
+            minNumbers: 1,
+            minSymbols: 1,
+        })
+        .withMessage("Password does not meet requirements.")
+    ]
+}
 
 /*  **********************************
   *  Registration Data Validation Rules
@@ -28,7 +55,13 @@ validate.registrationRules = () => {
             .trim()
             .isEmail()
             .normalizeEmail()
-            .withMessage("A valid email is required."),
+            .withMessage("A valid email is required.")
+            .custom(async (account_email) => {
+                const emailExists = await accountModel.checkExistingEmail(account_email)
+                if (emailExists) {
+                    throw new Error("Email exists. Please log in or use different email")
+                }
+            }),
         
         // password is required and must be strong passowrd
         body("account_password")
@@ -42,6 +75,26 @@ validate.registrationRules = () => {
             })
             .withMessage("Password does not meet requirements.")
      ]
+}
+
+/* ******************************
+ * Check data and return errors or continue to login
+ * ***************************** */
+validate.checkLogData = async (req, res, next) => {
+    let errors = []
+    errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        let nav = await utilities.getNav()
+        res.render("./account/login", {
+            errors,
+            title: "Login",
+            smallCssFile: "account.css",
+            largeCssFile: "account-large.css",
+            nav,
+        })
+        return
+    }
+    next()
 }
  
 /* ******************************
