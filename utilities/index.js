@@ -2,11 +2,11 @@ const invModel = require("../models/inventory-model")
 const Util = {}
 
 
-/* ************************
+/* *****************************
  * Constructs the nav HTML unordered list
- ************************** */
+ ********************************/
 Util.getNav = async function (req, res, next) {
-    let data = await invModel.getClassification()
+    let data = await invModel.getClassifications()
     let list = "<ul>"
     list+= '<li><a href="/" title="Home page">Home</a></li>'
     data.rows.forEach((row) => {
@@ -72,41 +72,23 @@ Util.buildInventoryItemDetailsGrid = async function name(vehicle) {
 }
 
 /* **************************************
-* Build the login view HTML
+* Build classification drop-down select list
 * ************************************ */
-/* Util.buildLoginGrid = async (req, res, next) => {
-    let grid
-    grid = '<div class="container">'
-    grid += '<form action="#" method="POST" id="submittedForm">'
-    grid += '<label for="account_email"> Email *<input type="email" name="account_email" id="account_email" required></label>'
-    grid += '<label for="account_password"> Password *<input type="password" name="account_password" id="account_password" required><span id="pswdBtn">show password</span></label>'
-    grid += '<input type="submit" value="login">'
-    grid += '</form>'
-    grid += '<p>No account? <a href="/account/register">Sign-up</a></p>'
-    grid += '</div>'
-    
-    return grid
+Util.buildClassificationList = async (classification_id = null) => {
+    let data = await invModel.getClassifications()
+    let classificationList = '<select name="classification_id" id="classificationList" required>'
+    classificationList += '<option value = "">Choose a classification</option>'
+    data.rows.forEach((row) => {
+        classificationList += '<option value = "' + row.classification_id + '"'
+        if (classification_id != null && row.classification_id == classification_id) {
+            classificationList += 'selected'
+        }
+        classificationList += '>' + row.classification_name + '</option>'
+    })
+    classificationList += '</select>'
+    return classificationList
 }
- */
-/* **************************************
-* Build the registration view HTML
-* ************************************ */
-/* Util.buildRegistrationGrid = async (req, res, next) => {
-    let grid
-    grid = '<div class="container">'
-    grid += '<form action="#" method="POST" id="submittedForm">'
-    grid += '<label for="account_firstname"> First name *<input type="text" name="account_firstname" id="account_firstname" required></label>'
-    grid += '<label for="account_lastname"> Last name *<input type="text" name="account_lastname" id="account_lastname" required></label>'
-    grid += '<label for="account_email"> Email *<input type="email" name="account_email" id="account_email" required></label>'
-    grid += '<label for="account_password"> Password *<input type="password" name="account_password" id="account_password" required><span id="pswdBtn">show password</span></label>'
-    grid += '<input type="submit" value="Register">'
-    grid += '</form>'
-    grid += '<p>Have account? <a href="/account/login">Sing-in</a></p>'
-    grid += '</div>'
-    
-    return grid
-}
- */
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 

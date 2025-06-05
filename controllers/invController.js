@@ -34,4 +34,44 @@ invCont.buildInventoryItemDetails = async function (req, res, next) {
     )
 }
 
+invCont.buildManagement = async (req, res, next) => {
+    const nav = await utilities.getNav()
+    res.render("./inventory/management",
+        {
+            title: "Vehicle Management",
+            smallCssFile: "management.css",
+            largeCssFile: "management-large.css",
+            nav,
+        }
+    )
+}
+
+invCont.buildAddClassification = async (req, res, next) => {
+    const nav = await utilities.getNav()
+    res.render("./inventory/add-classification",
+        {
+            title: "Add New Classification",
+            smallCssFile: "classification.css",
+            largeCssFile: "classification-large.css",
+            nav,
+            errors: null
+        }
+    )
+}
+
+invCont.buildAddInventory = async (req, res, next) => {
+    const nav = await utilities.getNav()
+    const classificationList = await utilities.buildClassificationList()
+    res.render("./inventory/add-inventory",
+        {
+            title: "Add New Vehicle",
+            smallCssFile: "inventory.css",
+            largeCssFile: "inventory-large.css",
+            nav,
+            classificationList,
+            errors: null
+        }
+    )
+}
+
 module.exports = invCont

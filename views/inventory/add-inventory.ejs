@@ -1,0 +1,58 @@
+<% if(title) { %>
+    <h1>
+        <%= title %>
+    </h1>
+    <% } else { res.redirect('/') } %>
+
+<%- messages() %>
+
+<% if(errors) { %>
+<ul class="notice">
+<% errors.array().forEach(error=> { %>
+    <li>
+        <%= error.msg %>
+    </li>
+    <% }); %>
+</ul>
+<% } %>
+
+<div class="container">
+    <form action="/inv/vehicle" method="POST" id="add-inventory-form">
+        <label for="classification">Classification *
+            <%- classificationList %>
+        </label>
+        <label for="invMake"> Make *
+            <input type="text" name="inv_make" id="invMake" required pattern="^[a-zA-Z]{3,}" 
+            placeholder="Min of 3 characters">
+        </label>
+        <label for="invModel"> Model *
+            <input type="text" name="inv_model" id="invModel" required pattern="^[a-zA-Z]{3,}" 
+            placeholder="Min of 3 characters">
+        </label>
+        <label for="invDescription"> Description *
+            <textarea name="inv_description" id="invDescription" cols="30" rows="10"></textarea>
+        </label>
+        <label for="invImage"> Image path *
+            <input type="text" name="inv_image" id="invImage" required>
+        </label>
+        <label for="invThumbnail"> Image path *
+            <input type="text" name="inv_thumbnail" id="invThumbnail" required>
+        </label>
+        <label for="invPrice"> Price *
+            <input type="text" name="inv_price" id="invPrice" required placeholder="Decimal or Integer">
+        </label>
+        <label for="invYear"> Year *
+            <input type="text" name="inv_year" id="invYear" required pattern="\d{4}"
+            placeholder="4-digit year">
+        </label>
+        <label for="inv_year"> Mile *
+            <input type="text" name="inv_miles" id="inv_miles" required pattern="\d+"
+            placeholder="Digit only">
+        </label>
+        <label for="invColor"> Color *
+            <input type="text" name="inv_color" id="invColor" required pattern="^[a-z]+$" 
+            placeholder="Only character">
+        </label>
+        <input type="submit" value="Add vehicle">
+    </form>
+</div>

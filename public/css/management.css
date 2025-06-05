@@ -1,0 +1,10 @@
+/*************************************
+ ******** MAIN STYLING *************
+ *************************************/
+ main{
+    padding: var(--small-size);
+ }
+
+.container{
+    padding: var(--large-size);
+}

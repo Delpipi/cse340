@@ -1,0 +1,29 @@
+<% if(title) { %>
+    <h1>
+        <%= title %>
+    </h1>
+<% } else { res.redirect('/') } %>
+
+<%- messages() %>
+
+<% if(errors) { %>
+    <ul class="notice">
+        <% errors.array().forEach(error => { %>
+            <li><%= error.msg %></li>
+        <% }); %>
+    </ul>
+<% } %>
+
+<div class="container">
+    <form action="/inv/classification" method="POST" id="add-classification-form">
+        <label for="classification_name"> Classification name *
+            <input type="text" name="classification_name" id="classification_name" required
+            pattern="^[a-z]{3,5}$" placeholder="Classification Name">
+        </label>
+        <ul class="pattern">
+            <li>Alphabetic character only</li>
+            <li>Between 3 and 5 lowercase characters</li>
+        </ul>
+        <input type="submit" value="Add Classification">
+    </form>
+</div>

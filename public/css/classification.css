@@ -44,3 +44,52 @@
 .namePrice h2, .namePrice span{
     font-size: 1rem;
 }
+
+/*************************************
+ ******** FORM ADD CLASSIFICATION STYLING 
+*************************************/
+.container{
+    border: 1px solid var(--accent-color2);
+    border-radius: 0.5rem;
+    width: 100%;
+    max-width: 600px;
+    padding: var(--large-size);
+    margin: var(--large-size) auto;
+    box-shadow: 1px 1px 5px #bbb;
+}
+
+#add-classification-form label {
+    display: block;
+    margin-top: 1rem;
+}
+
+#add-classification-form input[type="text"]{
+    display: block;
+    width: 100%;
+    padding: 0.5rem;
+    border: none;
+    font-size: 1rem;
+    border-radius: 0.2rem;
+    background-color: var(--accent-color2);
+}
+
+#add-classification-form input[required] {
+    border-left: 3px solid #ff0000;
+}
+
+#add-classification-form .pattern{
+    list-style: square;
+    font-size: 0.8rem;
+    font-style: italic;
+    margin-left: var(--small-size);
+    font-weight: 700;
+}
+
+#add-classification-form input[type="submit"] {
+    transition: background-color 0.5s ease;
+}
+
+#add-classification-form input[type="submit"]:hover{
+    background-color: #000;
+    color: #fff;
+}

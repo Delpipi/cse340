@@ -9,14 +9,6 @@ main h1{
     margin-bottom: 2rem;
 }
 
-/* ===== error style =====*/
-ul.notice{
-    list-style: square;
-    color: #ff0000;
-    padding: 1rem;
-    font-weight: 600;
-}
-
 /* ===== form style ====== */
 .container{
     background-color: var(--primary-color);
