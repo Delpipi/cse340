@@ -29,7 +29,6 @@ main h1{
 #submittedForm input[type="email"], 
 #submittedForm input[type="password"]{
     display: block;
-    color: #fff;
     width: 100%;
     padding: 0.5rem;
     border: none;

@@ -18,40 +18,41 @@
 
 <div class="container">
     <form action="/inv/vehicle" method="POST" id="add-inventory-form">
-        <label for="classification">Classification *
+        <label for="classificationList">Classification *
             <%- classificationList %>
         </label>
         <label for="invMake"> Make *
             <input type="text" name="inv_make" id="invMake" required pattern="^[a-zA-Z]{3,}" 
-            placeholder="Min of 3 characters">
+            placeholder="Min of 3 characters" value="<%= locals.inv_make %>">
         </label>
         <label for="invModel"> Model *
             <input type="text" name="inv_model" id="invModel" required pattern="^[a-zA-Z]{3,}" 
-            placeholder="Min of 3 characters">
+            placeholder="Min of 3 characters" value="<%= locals.inv_model %>">
         </label>
         <label for="invDescription"> Description *
-            <textarea name="inv_description" id="invDescription" cols="30" rows="10"></textarea>
+            <textarea name="inv_description" id="invDescription" cols="30" rows="10"><%= locals.inv_description %></textarea>
         </label>
         <label for="invImage"> Image path *
-            <input type="text" name="inv_image" id="invImage" required>
+            <input type="text" name="inv_image" id="invImage" required value="<%= locals.inv_image %>">
         </label>
         <label for="invThumbnail"> Image path *
-            <input type="text" name="inv_thumbnail" id="invThumbnail" required>
+            <input type="text" name="inv_thumbnail" id="invThumbnail" required value="<%= locals.inv_thumbnail %>">
         </label>
         <label for="invPrice"> Price *
-            <input type="text" name="inv_price" id="invPrice" required placeholder="Decimal or Integer">
+            <input type="text" name="inv_price" id="invPrice" required pattern="^\d+(\.\d{2})?$"
+            placeholder="Decimal or Integer" value="<%= locals.inv_price %>">
         </label>
         <label for="invYear"> Year *
             <input type="text" name="inv_year" id="invYear" required pattern="\d{4}"
-            placeholder="4-digit year">
+            placeholder="4-digit year" value="<%= locals.inv_year %>">
         </label>
-        <label for="inv_year"> Mile *
-            <input type="text" name="inv_miles" id="inv_miles" required pattern="\d+"
-            placeholder="Digit only">
+        <label for="invMiles"> Miles *
+            <input type="text" name="inv_miles" id="invMiles" required pattern="\d+"
+            placeholder="Digit only" value="<%= locals.inv_miles %>">
         </label>
         <label for="invColor"> Color *
             <input type="text" name="inv_color" id="invColor" required pattern="^[a-z]+$" 
-            placeholder="Only character">
+            placeholder="Only character" value="<%= locals.inv_color %>">
         </label>
         <input type="submit" value="Add vehicle">
     </form>

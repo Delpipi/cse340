@@ -15,9 +15,9 @@ invCont.buildByClassificationId = async function (req, res, next) {
     res.render("./inventory/classification", { title: className + " vehicles" , smallCssFile: "classification.css", largeCssFile: "classification-large.css", nav, grid})
 }
 
-/* ***************************
+/* *******************************
  *  Build inventory item details view
- * ************************** */
+ * ******************************/
 invCont.buildInventoryItemDetails = async function (req, res, next) {
     const inventory_id = req.params.inventoryId
     const vehicle = await invModel.getInventoryItemDetails(inventory_id)
@@ -34,6 +34,9 @@ invCont.buildInventoryItemDetails = async function (req, res, next) {
     )
 }
 
+/* *******************************
+ *  Build manageement view
+ * ******************************/
 invCont.buildManagement = async (req, res, next) => {
     const nav = await utilities.getNav()
     res.render("./inventory/management",
@@ -46,6 +49,9 @@ invCont.buildManagement = async (req, res, next) => {
     )
 }
 
+/* *******************************
+ * Build add new classification view
+ * ******************************/
 invCont.buildAddClassification = async (req, res, next) => {
     const nav = await utilities.getNav()
     res.render("./inventory/add-classification",
@@ -59,6 +65,9 @@ invCont.buildAddClassification = async (req, res, next) => {
     )
 }
 
+/* *******************************
+ * Build add new vehicle view
+ * ******************************/
 invCont.buildAddInventory = async (req, res, next) => {
     const nav = await utilities.getNav()
     const classificationList = await utilities.buildClassificationList()
@@ -72,6 +81,93 @@ invCont.buildAddInventory = async (req, res, next) => {
             errors: null
         }
     )
+}
+
+/* *******************************
+ * Add new classification
+ * ******************************/
+invCont.addClassification = async (req, res, next) => {
+    const nav = utilities.getNav()
+
+    const { classification_name } = req.body
+
+    const classResult = await invModel.addClassification(classification_name)
+
+    if (classResult) {
+        req.flash("notice",
+            `A new classification ${classification_name} is added.`
+        )
+        res.status(201).render("./inventory/management", {
+            title: "Vehicle Management",
+            smallCssFile: "management.css",
+            largeCssFile: "management-large.css",
+            nav,
+        })
+    } else {
+        req.flash("notice",
+            "Sorry, Add new classification failed"
+        )
+        res.status(501).render("./inventory/add-classification",
+            {
+                title: "Add New Classification",
+                smallCssFile: "classification.css",
+                largeCssFile: "classification-large.css",
+                nav,
+                errors: null
+            }
+        )
+    }
+}
+
+/* *******************************
+ * Add new vehicle
+ * ******************************/
+invCont.addVehicle = async (req, res, next) => {
+    const nav = utilities.getNav()
+
+    const { inv_make, inv_model, inv_year, inv_description,
+        inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id
+    } = req.body
+
+    const vehicleResult = await invModel.addVehicle(
+        inv_make,
+        inv_model,
+        inv_year,
+        inv_description,
+        inv_image,
+        inv_thumbnail,
+        inv_price,
+        inv_miles,
+        inv_color,
+        classification_id
+    )
+
+    if (vehicleResult) {
+        req.flash("notice",
+            `A new vehicle Make: ${inv_make} and Model: ${inv_model} is added.`
+        )
+        res.status(201).render("./inventory/management", {
+            title: "Vehicle Management",
+            smallCssFile: "management.css",
+            largeCssFile: "management-large.css",
+            nav,
+        })
+    } else {
+        req.flash("notice",
+            "Sorry, Add new vehicle failed"
+        )
+        const classificationList = await utilities.buildClassificationList()
+        res.status(501).render("./inventory/add-inventory",
+            {
+                title: "Add New Vehicle",
+                smallCssFile: "inventory.css",
+                largeCssFile: "inventory-large.css",
+                nav,
+                classificationList,
+                errors: null
+            }
+        )
+    }
 }
 
 module.exports = invCont
