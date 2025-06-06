@@ -34,7 +34,7 @@ app.use(expressLayouts)
 app.set("layout", "./layouts/layout") // not at views root
 
 
-/* ***********************
+/* ************************
  * Middleware
  * ************************/
 app.use(session({
@@ -48,9 +48,6 @@ app.use(session({
   name: 'sessionId',
 }))
 
-//allow the cookie parser
-app.use(cookieParser())
-
 //Express Messages Middleware
 app.use(require('connect-flash')())
 app.use(function (req, res, next) {
@@ -62,7 +59,13 @@ app.use(function (req, res, next) {
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
-/* ***********************
+//allow the cookie parser
+app.use(cookieParser())
+
+//check JWT
+app.use(utilities.checkJWTToken)
+
+/* ************************
  * Routes
  *************************/
 app.use(static)
@@ -102,17 +105,17 @@ app.use(async (err, req, res, next) => {
   })
 })
 
-/* ***********************
+/* ************************************
  * Local Server Information
  * Values from .env (environment) file
- *************************/
+ *************************************/
 const port = process.env.PORT
 const host = process.env.HOST
 
 
-/* ***********************
+/* *****************************************
  * Log statement to confirm server operation
- *************************/
+ *******************************************/
 app.listen(port, () => {
   console.log(`app listening on ${host}:${port}`)
 })
