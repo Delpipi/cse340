@@ -10,19 +10,21 @@ const utilities = require('../utilities')
 const regValidate = require('../utilities/account-validation')
 const accountCont = require('../controllers/accountController')
 
+//Deliver account management
+router.get('/', utilities.handleErrors(accountCont.buildAccountManagement))
+
 //Deliver login
 router.get('/login', utilities.handleErrors(accountCont.buildLogin))
 
 //Deliver registration
 router.get('/register', utilities.handleErrors(accountCont.buildRegistration))
 
+
 //Deliver login
 router.post('/login', 
     regValidate.loginRules(),
     regValidate.checkLogData,
-    (req, res) => {
-        res.status(200).send('login process')
-    }
+    utilities.handleErrors(accountCont.accountLogin)
 )
 
 //Regiser account

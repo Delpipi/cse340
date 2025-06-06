@@ -11,10 +11,12 @@ const expressLayouts = require("express-ejs-layouts")
 const env = require("dotenv").config()
 const app = express()
 
-const session = require("express-session")
 const pool = require('./database')
-
 const utilities = require("./utilities/")
+
+const session = require("express-session")
+const bodyParser = require("body-parser")
+const cookieParser = require("cookie-parser")
 
 const static = require("./routes/static")
 const inventoryRoute = require("./routes/inventoryRoute")
@@ -22,7 +24,6 @@ const accountRoute = require("./routes/accountRoute")
 const errorRoute = require("./routes/errorRoute")
 
 const baseController = require("./controllers/baseController")
-const bodyParser = require("body-parser")
 
 
 /* *************************************
@@ -31,9 +32,6 @@ const bodyParser = require("body-parser")
 app.set("view engine", "ejs")
 app.use(expressLayouts)
 app.set("layout", "./layouts/layout") // not at views root
-
-
-
 
 
 /* ***********************
@@ -49,6 +47,9 @@ app.use(session({
   saveUninitialized: true,
   name: 'sessionId',
 }))
+
+//allow the cookie parser
+app.use(cookieParser())
 
 //Express Messages Middleware
 app.use(require('connect-flash')())
