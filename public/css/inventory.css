@@ -23,7 +23,8 @@
 
 #add-inventory-form input[type="text"], 
 #add-inventory-form textarea, 
-#add-inventory-form select {
+#add-inventory-form select, 
+#update-inventory-form select {
     display: block;
     width: 100%;
     padding: 0.5rem;

@@ -7,7 +7,7 @@ const validate = {}
 /*****************************************
 *  Add classification Data Validation Rules
 ***************************************/
-validate.classRules = () => {
+validate.classAddRules = () => {
     return [
         // classification_name is required and must be 
         // between 3 and 5 characters long
@@ -19,11 +19,10 @@ validate.classRules = () => {
     ]
 }
 
-/***************************************
- * Check classification name and return errors 
- * or return to management view
- **************************************/
-validate.checkClassData = async (req, res, next) => {
+/***********************************
+ * Check Add classification Data
+ ***********************************/
+validate.checkClassAddData = async (req, res, next) => {
     const { classification_name } = req.body
     let errors = []
     errors = validationResult(req)
@@ -45,9 +44,9 @@ validate.checkClassData = async (req, res, next) => {
 }
 
 /***********************************
-*  Vehicle Data Validation Rules
+*  Add Inventory Validation Rules
 ************************************/
-validate.vehicleRules = () => {
+validate.invAddRules = () => {
     return [
         // classification_name is required and must be 
         // between 3 and 5 characters long
@@ -123,11 +122,10 @@ validate.vehicleRules = () => {
     ]
 }
 
-/***************************************
- * Check vehicle data and return errors 
- * or redirect to management view
- **************************************/
-validate.checkVehiculeData = async (req, res, next) => {
+/*****************************
+ * Check Add inventory data 
+ *****************************/
+validate.checkInvAddData = async (req, res, next) => {
     const {inv_make, inv_model, inv_year, inv_description,
         inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id
     } = req.body
@@ -154,6 +152,43 @@ validate.checkVehiculeData = async (req, res, next) => {
     next()
 }
 
+/*******************************
+ * Check Update inventory data 
+ *******************************/
+validate.checkInvUpdateData = async (req, res, next) => {
+    const {inv_id, inv_make, inv_model, inv_year, inv_description,
+        inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id
+    } = req.body
+    let errors = []
+    errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        console.log(errors)
+        const nav = await utilities.getNav()
+        const classificationSelect = await utilities.buildClassificationList(classification_id)
+        const name = `${inv_make} ${inv_model}`
+        res.render("./inventory/edit-inventory",{
+                title: "Edit " + name,
+                smallCssFile: "inventory.css",
+                largeCssFile: "inventory-large.css",
+                nav,
+                classificationList: classificationSelect,
+                inv_id: inv_id,
+                inv_make: inv_make,
+                inv_model: inv_model,
+                inv_year: inv_year,
+                inv_description: inv_description,
+                inv_image: inv_image,
+                inv_thumbnail: inv_thumbnail,
+                inv_price: inv_price,
+                inv_miles: inv_miles,
+                inv_color: inv_color,
+                errors: errors
+            }
+        )
+        return
+    }
+    next()
+}
 
 
 module.exports = validate

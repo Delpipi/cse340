@@ -8,3 +8,24 @@
 .container{
     padding: var(--large-size);
 }
+
+.container select {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    padding: 0.5rem;
+    border: none;
+    font-size: 1rem;
+    border-radius: 0.2rem;
+    background-color: var(--accent-color2);
+    margin-bottom: var(--large-size);
+}
+
+.container select:focus{
+    outline: none;
+}
+
+.container h2{
+    padding-top: var(--large-size);
+    padding-bottom: var(--small-size);
+}

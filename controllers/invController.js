@@ -39,13 +39,13 @@ invCont.buildInventoryItemDetails = async function (req, res, next) {
  * ******************************/
 invCont.buildManagement = async (req, res, next) => {
     const nav = await utilities.getNav()
-    const classificationSelect = await utilities.buildClassificationList()
+    const classificationList = await utilities.buildClassificationList()
     res.render("./inventory/management",
         {
             title: "Vehicle Management",
             smallCssFile: "management.css",
             largeCssFile: "management-large.css",
-            classificationSelect,
+            classificationList,
             nav,
         }
     )
@@ -124,14 +124,14 @@ invCont.addClassification = async (req, res, next) => {
 /* *******************************
  * Add new vehicle
  * ******************************/
-invCont.addVehicle = async (req, res, next) => {
+invCont.addInventory = async (req, res, next) => {
     const nav = utilities.getNav()
 
     const { inv_make, inv_model, inv_year, inv_description,
         inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id
     } = req.body
 
-    const vehicleResult = await invModel.addVehicle(
+    const addResult = await invModel.addInventory(
         inv_make,
         inv_model,
         inv_year,
@@ -144,7 +144,7 @@ invCont.addVehicle = async (req, res, next) => {
         classification_id
     )
 
-    if (vehicleResult) {
+    if (addResult) {
         req.flash("notice",
             `A new vehicle Make: ${inv_make} and Model: ${inv_model} is added.`
         )
@@ -182,6 +182,106 @@ invCont.getInventoryJSON = async (req, res, next) => {
         return res.json(invData)
     } else {
         next(new Error("No data returned"))
+    }
+}
+
+
+/* *******************************
+ * Build update inventory view
+ * ******************************/
+invCont.buildEditInventory = async (req, res, next) => {
+    const inventory_id = parseInt(req.params.inventory_id) 
+    let nav = await utilities.getNav()
+    const invData = await invModel.getInventoryItemDetails(inventory_id)
+    const classificationSelect = await utilities.buildClassificationList(invData.classification_id)
+    const name = `${invData.inv_make} ${invData.inv_model}`
+    if (invData) {
+        res.render("./inventory/edit-inventory",
+            {
+                title: "Edit " + name,
+                smallCssFile: "inventory.css",
+                largeCssFile: "inventory-large.css",
+                nav,
+                classificationList: classificationSelect,
+                inv_id: invData.inv_id,
+                inv_make: invData.inv_make,
+                inv_model: invData.inv_model,
+                inv_year: invData.inv_year,
+                inv_description: invData.inv_description,
+                inv_image: invData.inv_image,
+                inv_thumbnail: invData.inv_thumbnail,
+                inv_price: invData.inv_price,
+                inv_miles: invData.inv_miles,
+                inv_color: invData.inv_color,
+                errors: null
+            }
+        )
+    }
+}
+
+
+/* *******************************
+ * Update inventory process
+ * ******************************/
+invCont.updateInventory = async (req, res, next) => {
+    const nav = utilities.getNav()
+
+    const {inv_id, inv_make, inv_model, inv_year, inv_description,
+        inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id
+    } = req.body
+
+    const updateResult = await invModel.updateInventory(
+        inv_id,
+        inv_make,
+        inv_model,
+        inv_year,
+        inv_description,
+        inv_image,
+        inv_thumbnail,
+        inv_price,
+        inv_miles,
+        inv_color,
+        classification_id
+    )
+
+    if (updateResult) {
+        req.flash("notice",
+            `${inv_make} ${inv_model} was successfull updated.`
+        )
+        const classificationList = await utilities.buildClassificationList(inv_id)
+        res.status(201).render("./inventory/management", {
+            title: "Vehicle Management",
+            smallCssFile: "management.css",
+            largeCssFile: "management-large.css",
+            nav,
+            classificationList,
+        })
+    } else {
+        req.flash("notice",
+            `Sorry, ${name} modification has failed`
+        )
+        const classificationSelect = await utilities.buildClassificationList(inv_id)
+         const name= `${inv_make} ${inv_model}`
+        res.render("./inventory/edit-inventory",
+            {
+                title: "Edit " + name,
+                smallCssFile: "inventory.css",
+                largeCssFile: "inventory-large.css",
+                nav,
+                classificationList: classificationSelect,
+                inv_id: invData.inv_id,
+                inv_make: invData.inv_make,
+                inv_model: invData.inv_model,
+                inv_year: invData.inv_year,
+                inv_description: invData.inv_description,
+                inv_image: invData.inv_image,
+                inv_thumbnail: invData.inv_thumbnail,
+                inv_price: invData.inv_price,
+                inv_miles: invData.inv_miles,
+                inv_color: invData.inv_color,
+                errors: null
+            }
+        )
     }
 }
 

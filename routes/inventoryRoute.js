@@ -4,7 +4,7 @@ const router = new express.Router()
 const utilities = require("../utilities/")
 
 const invController = require("../controllers/invController")
-const classValidate = require("../utilities/inventory-validation")
+const invValidate = require("../utilities/inventory-validation")
 
 //Route to build inventory by classification view
 router.get("/", utilities.handleErrors(invController.buildManagement));
@@ -13,17 +13,23 @@ router.get("/classification", utilities.handleErrors(invController.buildAddClass
 router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
 router.get("/detail/:inventoryId", utilities.handleErrors(invController.buildInventoryItemDetails));
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON));
+router.get("/edit/:inventory_id", utilities.handleErrors(invController.buildEditInventory));
 
 router.post("/classification",
-    classValidate.classRules(),
-    classValidate.checkClassData,
+    invValidate.classAddRules(),
+    invValidate.checkClassAddData,
     utilities.handleErrors(invController.addClassification)
 );
 router.post("/vehicle",
-    classValidate.vehicleRules(),
-    classValidate.checkVehiculeData,
-    utilities.handleErrors(invController.addVehicle)
+    invValidate.invAddRules(),
+    invValidate.checkInvAddData,
+    utilities.handleErrors(invController.addInventory)
 );
 
+router.post("/update",
+    invValidate.invAddRules(),
+    invValidate.checkInvUpdateData,
+    utilities.handleErrors(invController.updateInventory)
+);
 
 module.exports = router;
