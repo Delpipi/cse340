@@ -11,7 +11,10 @@ const regValidate = require('../utilities/account-validation')
 const accountCont = require('../controllers/accountController')
 
 //Deliver account management
-router.get('/', utilities.handleErrors(accountCont.buildAccountManagement))
+router.get('/',
+    utilities.checkLogin,
+    utilities.handleErrors(accountCont.buildAccountManagement)
+)
 
 //Deliver login
 router.get('/login', utilities.handleErrors(accountCont.buildLogin))

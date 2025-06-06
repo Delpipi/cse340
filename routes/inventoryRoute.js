@@ -12,6 +12,7 @@ router.get("/vehicle", utilities.handleErrors(invController.buildAddInventory));
 router.get("/classification", utilities.handleErrors(invController.buildAddClassification));
 router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
 router.get("/detail/:inventoryId", utilities.handleErrors(invController.buildInventoryItemDetails));
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON));
 
 router.post("/classification",
     classValidate.classRules(),
