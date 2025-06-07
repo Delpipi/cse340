@@ -108,10 +108,21 @@ Util.checkJWTToken = async (req, res, next) => {
                 }
                 res.locals.accountData = accountData
                 res.locals.loggedin = 1
+                if (accountData.account_type === 'Client' ||
+                    accountData.account_type === 'client') {
+                    if (req.path === '/inv') {
+                        req.flash("notice", "Log in as Admin or Employee to access management view")
+                        return res.redirect("/account/login")
+                    }
+                }
                 next()
             }
         )
     } else {
+        if (req.path === '/inv'){
+            req.flash("notice", "Log in as Admin or Employee to access management view")
+            return res.redirect("/account/login")
+        }
         next()
     }
 }
