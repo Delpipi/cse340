@@ -88,8 +88,9 @@ main {
   padding: var(--small-size);
 }
 
-.container{
-  display: block;
+.container h2, .container h3 {
+  padding-top: var(--large-size);
+  padding-bottom: var(--small-size);
 }
 
 /*====== header styling ===========*/

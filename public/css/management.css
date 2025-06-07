@@ -24,8 +24,3 @@
 .container select:focus{
     outline: none;
 }
-
-.container h2{
-    padding-top: var(--large-size);
-    padding-bottom: var(--small-size);
-}
