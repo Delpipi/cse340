@@ -22,6 +22,9 @@ router.get('/login', utilities.handleErrors(accountCont.buildLogin))
 //Deliver registration
 router.get('/register', utilities.handleErrors(accountCont.buildRegistration))
 
+//Logout
+router.get('/logout', utilities.handleErrors(accountCont.accountLogout))
+
 
 //Deliver login
 router.post('/login', 

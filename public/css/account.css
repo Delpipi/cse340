@@ -5,29 +5,24 @@ main {
     padding: var(--small-size);
 }
 
-main h1{
-    margin-bottom: 2rem;
-}
-
 /* ===== form style ====== */
-.container{
+#loginForm{
     background-color: var(--primary-color);
     padding: 1rem;
-    margin: 0 auto;
+    margin: var(--small-size) auto;
     width: 90%;
     max-width: 600px;
     border-radius: 0.4rem;
 }
 
-#submittedForm label{
+#loginForm label{
     display: block;
     color: #fff;
-    margin-top: 1rem;
 }
 
-#submittedForm input[type="text"],
-#submittedForm input[type="email"], 
-#submittedForm input[type="password"]{
+#loginForm input[type="text"],
+#loginForm input[type="email"], 
+#loginForm input[type="password"]{
     display: block;
     width: 100%;
     padding: 0.5rem;
@@ -37,27 +32,27 @@ main h1{
     border-radius: 0.2rem;
 }
 
-#submittedForm input[required] {
+#loginForm input[required] {
     border-left: 3px solid #ff0000;
 }
 
-#submittedForm input:focus{
+#loginForm input:focus{
    outline: none;
 }
 
-#submittedForm input:required:invalid,  #submittedForm input:focus{
+#loginForm input:required:invalid,  #submittedForm input:focus{
     background-image: url(/images/site/invalid.png);
     background-position: right top;
     background-repeat: no-repeat;
 }
 
-#submittedForm input:required:valid{
+#loginForm input:required:valid{
     background-image: url(/images/site/valid.png);
     background-position: right top;
     background-repeat: no-repeat;
 }
 
-#submittedForm input[type="submit"]{
+#loginForm input[type="submit"]{
     background-image: none !important;
     display: block;
     padding: 0.4rem 2rem;
@@ -67,15 +62,15 @@ main h1{
     margin: 1rem auto;
 }
 
-#submittedForm input[type="submit"]:hover{
+#loginForm input[type="submit"]:hover{
     cursor: pointer;
 }
 
-.container p{
+#loginForm p{
     text-align: center;
 }
 
-.container p, .container p > a  {
+#loginForm p, #loginForm p > a  {
     color: #fff;
 }
 

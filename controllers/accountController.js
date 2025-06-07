@@ -104,9 +104,9 @@ accountCont.registerAccount = async (req, res) =>{
     }
 }
 
-/* ****************************************
+/* **************************************
  *  Process login request
- * ************************************ */
+ * **************************************/
 accountCont.accountLogin = async (req, res) => {
     let nav = await utilities.getNav()
     const { account_email, account_password } = req.body
@@ -149,6 +149,18 @@ accountCont.accountLogin = async (req, res) => {
     } catch (error) {
         throw new Error('Access Forbidden')
     }
+}
+
+/* **************************************
+ *  Process logout request
+ * **************************************/
+accountCont.accountLogout = async (req, res, next) => {
+    if (req.cookies.jwt) {
+        res.clearCookie("jwt")
+        res.locals.accountData = {}
+        res.locals.loggedin = 0
+    }
+    return res.redirect("/")
 }
 
 module.exports = accountCont

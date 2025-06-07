@@ -16,8 +16,8 @@
     </ul>
 <%}%>
 
-<div class="container">
-    <form action="/account/login" method="POST" id="submittedForm">
+<div id="loginForm">
+    <form action="/account/login" method="POST">
         <label for="account_email"> Email *<input type="email" name="account_email" id="account_email" required></label>
         <label for="account_password"> Password *
             <span>Passwords must be at least 12 characters and contain at least 1 number, 1 capital letter and 1 special

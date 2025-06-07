@@ -29,18 +29,13 @@ ul {
   list-style: none;
 }
 
-#messages{
-  margin: 1rem 0px;
-}
-
 /* ===== error style =====*/
 ul.notice {
   list-style: square;
   color: #ff0000;
-  padding: 1rem;
+  padding: var(--small-size);
   font-weight: 600;
 }
-
 
 /*********************************
  *********** HEADER STYLING ******
@@ -91,6 +86,10 @@ nav ul li > a{
  *************************************/
 main {
   padding: var(--small-size);
+}
+
+.container{
+  display: block;
 }
 
 /*====== header styling ===========*/
