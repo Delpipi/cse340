@@ -17,17 +17,17 @@
 <% } %>
 
 <div class="container">
-    <form action="/inv/update" method="POST" id="update-inventory-form">
+    <form action="/inv/update" method="POST" id="add-inventory-form">
         <label for="classificationList">Classification *
             <%- classificationList %>
         </label>
         <input type="hidden" name="inv_id" <% if(locals.inv_id) {%> value="<%= locals.inv_id %>" <% } %>>
         <label for="invMake"> Make *
-            <input type="text" name="inv_make" id="invMake" required pattern="^[a-zA-Z]{3,}" 
+            <input type="text" name="inv_make" id="invMake" required pattern="^[a-zA-Z]+(\s[a-zA-Z]+)*$" 
             placeholder="Min of 3 characters" value="<%= locals.inv_make %>">
         </label>
         <label for="invModel"> Model *
-            <input type="text" name="inv_model" id="invModel" required pattern="^[a-zA-Z]{3,}" 
+            <input type="text" name="inv_model" id="invModel" required pattern="^[a-zA-Z]+(\s[a-zA-Z]+)*$" 
             placeholder="Min of 3 characters" value="<%= locals.inv_model %>">
         </label>
         <label for="invDescription"> Description *
@@ -52,7 +52,7 @@
             placeholder="Digit only" value="<%= locals.inv_miles %>">
         </label>
         <label for="invColor"> Color *
-            <input type="text" name="inv_color" id="invColor" required pattern="^[a-z]+$" 
+            <input type="text" name="inv_color" id="invColor" required pattern="^[a-zA-Z]+$" 
             placeholder="Only character" value="<%= locals.inv_color %>">
         </label>
         <input type="submit" name="submit" value="Update vehicle">

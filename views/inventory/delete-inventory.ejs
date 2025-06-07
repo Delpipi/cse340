@@ -1,0 +1,41 @@
+<% if(title) { %>
+    <h1>
+        <%= title %>
+    </h1>
+    <% } else { res.redirect('/') } %>
+
+<%- messages() %>
+
+<% if(errors) { %>
+<ul class="notice">
+<% errors.array().forEach(error=> { %>
+    <li>
+        <%= error.msg %>
+    </li>
+    <% }); %>
+</ul>
+<% } %>
+
+<div class="container">
+    <p><b>Confirm Deletion - The delete is permanent.</b></p>
+    <form action="/inv/delete" method="POST" id="add-inventory-form">
+        <input type="hidden" name="inv_id" <% if(locals.inv_id) {%> value="<%= locals.inv_id %>" <% } %>>
+        <label for="invMake"> Make
+            <input type="text" name="inv_make" id="invMake" required pattern="^[a-zA-Z]{3,}" 
+            placeholder="Min of 3 characters" value="<%= locals.inv_make %>" disabled>
+        </label>
+        <label for="invModel"> Model
+            <input type="text" name="inv_model" id="invModel" required pattern="^[a-zA-Z]{3,}" 
+            placeholder="Min of 3 characters" value="<%= locals.inv_model %>" disabled>
+        </label>
+        <label for="invPrice"> Price *
+            <input type="text" name="inv_price" id="invPrice" required pattern="^\d+(\.\d{2})?$"
+            placeholder="Decimal or Integer" value="<%= locals.inv_price %>" disabled>
+        </label>
+        <label for="invYear"> Year *
+            <input type="text" name="inv_year" id="invYear" required pattern="\d{4}"
+            placeholder="4-digit year" value="<%= locals.inv_year %>" disabled>
+        </label>
+        <input type="submit" name="submit" value="Delete Item">
+    </form>
+</div>

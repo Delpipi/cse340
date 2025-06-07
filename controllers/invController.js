@@ -219,12 +219,37 @@ invCont.buildEditInventory = async (req, res, next) => {
     }
 }
 
+/* *******************************
+ * Build delete inventory view
+ * ******************************/
+invCont.buildDeleteInventory = async (req, res, next) => {
+    const inventory_id = parseInt(req.params.inventory_id) 
+    let nav = await utilities.getNav()
+    const invData = await invModel.getInventoryItemDetails(inventory_id)
+    if (invData) {
+        res.render("./inventory/delete-inventory",
+            {
+                title: "Delete " + invData.inv_model,
+                smallCssFile: "inventory.css",
+                largeCssFile: "inventory-large.css",
+                nav,
+                inv_id: invData.inv_id,
+                inv_make: invData.inv_make,
+                inv_model: invData.inv_model,
+                inv_year: invData.inv_year,
+                inv_price: invData.inv_price,
+                errors: null
+            }
+        )
+    }
+}
+
 
 /* *******************************
  * Update inventory process
  * ******************************/
 invCont.updateInventory = async (req, res, next) => {
-    const nav = utilities.getNav()
+    const nav = await utilities.getNav()
 
     const {inv_id, inv_make, inv_model, inv_year, inv_description,
         inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id
@@ -248,7 +273,7 @@ invCont.updateInventory = async (req, res, next) => {
         req.flash("notice",
             `${inv_make} ${inv_model} was successfull updated.`
         )
-        const classificationList = await utilities.buildClassificationList(inv_id)
+        const classificationList = await utilities.buildClassificationList()
         res.status(201).render("./inventory/management", {
             title: "Vehicle Management",
             smallCssFile: "management.css",
@@ -279,6 +304,48 @@ invCont.updateInventory = async (req, res, next) => {
                 inv_price: invData.inv_price,
                 inv_miles: invData.inv_miles,
                 inv_color: invData.inv_color,
+                errors: null
+            }
+        )
+    }
+}
+
+/* *******************************
+ * Delete inventory process
+ * ******************************/
+invCont.deleteInventory = async (req, res, next) => {
+    const nav = await utilities.getNav()
+    const {inv_id, inv_make, inv_model, inv_year, inv_price} = req.body
+
+    const data = await invModel.deleteInventory(inv_id)
+
+    if (data) {
+        req.flash("notice",
+            `The deletion was successfull updated.`
+        )
+        const classificationList = await utilities.buildClassificationList()
+        res.status(201).render("./inventory/management", {
+            title: "Vehicle Management",
+            smallCssFile: "management.css",
+            largeCssFile: "management-large.css",
+            nav,
+            classificationList,
+        })
+    } else {
+        req.flash("notice",
+            `Sorry, The delete failed`
+        )
+        res.render("./inventory/delete-inventory",
+            {
+                title: "Delete " + inv_model,
+                smallCssFile: "inventory.css",
+                largeCssFile: "inventory-large.css",
+                nav,
+                inv_id: inv_id,
+                inv_make: inv_make,
+                inv_model: inv_model,
+                inv_year: inv_year,
+                inv_price: inv_price,
                 errors: null
             }
         )

@@ -14,6 +14,7 @@ router.get("/type/:classificationId", utilities.handleErrors(invController.build
 router.get("/detail/:inventoryId", utilities.handleErrors(invController.buildInventoryItemDetails));
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON));
 router.get("/edit/:inventory_id", utilities.handleErrors(invController.buildEditInventory));
+router.get("/delete/:inventory_id", utilities.handleErrors(invController.buildDeleteInventory));
 
 router.post("/classification",
     invValidate.classAddRules(),
@@ -30,6 +31,10 @@ router.post("/update",
     invValidate.invAddRules(),
     invValidate.checkInvUpdateData,
     utilities.handleErrors(invController.updateInventory)
+);
+
+router.post("/delete",
+    utilities.handleErrors(invController.deleteInventory)
 );
 
 module.exports = router;
