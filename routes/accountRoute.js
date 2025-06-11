@@ -48,9 +48,9 @@ router.post('/update/:account_id',
     (req, res, next) => {
         const { action } = req.body;
         if (action === 'update-account') {
-            utilities.handleErrors(accountCont.updateAccount)
+            utilities.handleErrors(accountCont.updateAccount)(req, res, next)
         } else if (action === 'update-password') {
-            utilities.handleErrors(accountCont.updatePasswordAccount)
+            utilities.handleErrors(accountCont.updatePasswordAccount)(req, res, next)
         } else {
             throw new Error("");
         }
