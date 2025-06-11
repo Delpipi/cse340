@@ -77,6 +77,53 @@ validate.registrationRules = () => {
      ]
 }
 
+/************************************
+*  Update Data Validation Rules
+*************************************/
+validate.updateRules =  async (req, res, next) => {
+    let rules = [];
+    
+    if (req.body.action === 'update-password') {
+        rules = [
+            body("account_password")
+                .trim()
+                .isStrongPassword({
+                    minLength: 12,
+                    minLowercase: 1,
+                    minUppercase: 1,
+                    minNumbers: 1,
+                    minSymbols: 1,
+                })
+                .withMessage("Password does not meet requirements.")
+        ];
+    } else if(req.body.action === 'update-account'){
+        rules = [
+            body("account_firstname")
+                .trim()
+                .isString()
+                .isLength({ min: 1 })
+                .withMessage("Please provide a first name."),
+        
+            body("account_lastname")  // Fix: this should be "account_lastname" instead of "account_firstname"
+                .trim()
+                .isString()
+                .isLength({ min: 1 })
+                .withMessage("Please provide a last name."),
+        
+            body("account_email")
+                .trim()
+                .isEmail()
+                .normalizeEmail()
+                .withMessage("A valid email is required."),
+        ];
+    }
+
+    await Promise.all(rules.map(rule => rule.run(req)));
+
+    next();
+}
+
+
 /* ******************************
  * Check data and return errors or continue to login
  * ***************************** */
@@ -117,6 +164,31 @@ validate.checkRegData = async (req, res, next) => {
             account_email,
         })
         return
+    }
+    next()
+}
+
+/********************************
+* Check data and return errors or 
+* continue to update
+******************************* */
+validate.checkUpdateData = async (req, res, next) => {
+    const { account_firstname, account_lastname, account_email } = req.body
+    let errors = []
+    errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        console.log(errors)
+        let nav = await utilities.getNav()
+        res.render("./account/edit-account", {
+            errors,
+            title: "Edit Account",
+            smallCssFile: "account.css",
+            largeCssFile: "account-large.css",
+            nav,
+            account_firstname,
+            account_lastname,
+            account_email,
+        })
     }
     next()
 }

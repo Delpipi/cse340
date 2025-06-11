@@ -6,24 +6,24 @@
 /*************************************
 ******** FORM ADD CLASSIFICATION STYLING 
 *************************************/
-.container {
+#inventoryForm {
     border: 1px solid var(--accent-color2);
     border-radius: 0.5rem;
     width: 100%;
     max-width: 600px;
-    padding: var(--large-size);
-    margin: var(--large-size) auto;
+    padding: var(--small-size);
+    margin: var(--small-size) auto;
     box-shadow: 1px 1px 5px #bbb;
 }
 
-#add-inventory-form label {
+#inventoryForm label {
     display: block;
     margin-top: 1rem;
 }
 
-#add-inventory-form input[type="text"], 
-#add-inventory-form textarea, 
-#add-inventory-form select, 
+#inventoryForm input[type="text"], 
+#inventoryForm textarea, 
+#inventoryForm select, 
 #update-inventory-form select {
     display: block;
     width: 100%;
@@ -34,11 +34,11 @@
     background-color: var(--accent-color2);
 }
 
-#add-inventory-form input[required], #add-inventory-form textarea {
+#inventoryForm input[required], #inventoryForm textarea {
     border-left: 3px solid #ff0000;
 }
 
-#add-inventory-form .pattern {
+#inventoryForm .pattern {
     list-style: square;
     font-size: 0.8rem;
     font-style: italic;
@@ -46,11 +46,11 @@
     font-weight: 700;
 }
 
-#add-inventory-form input[type="submit"] {
+#inventoryForm input[type="submit"] {
     transition: background-color 0.5s ease;
 }
 
-#add-inventory-form input[type="submit"]:hover {
+#inventoryForm input[type="submit"]:hover {
     background-color: #000;
     color: #fff;
 }

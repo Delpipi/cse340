@@ -5,24 +5,26 @@ main {
     padding: var(--small-size);
 }
 
-/* ===== form style ====== */
-#loginForm{
+/*************************************
+******** REGISTER, LOGIN FORM STYLING 
+*************************************/
+#accountForm{
     background-color: var(--primary-color);
-    padding: 1rem;
+    padding:var(--small-size);
     margin: var(--small-size) auto;
     width: 90%;
     max-width: 600px;
     border-radius: 0.4rem;
 }
 
-#loginForm label{
+#accountForm label{
     display: block;
     color: #fff;
 }
 
-#loginForm input[type="text"],
-#loginForm input[type="email"], 
-#loginForm input[type="password"]{
+#accountForm input[type="text"],
+#accountForm input[type="email"], 
+#accountForm input[type="password"]{
     display: block;
     width: 100%;
     padding: 0.5rem;
@@ -32,27 +34,27 @@ main {
     border-radius: 0.2rem;
 }
 
-#loginForm input[required] {
+#accountForm input[required] {
     border-left: 3px solid #ff0000;
 }
 
-#loginForm input:focus{
+#accountForm input:focus{
    outline: none;
 }
 
-#loginForm input:required:invalid,  #submittedForm input:focus{
+#accountForm input:required:invalid,  #submittedForm input:focus{
     background-image: url(/images/site/invalid.png);
     background-position: right top;
     background-repeat: no-repeat;
 }
 
-#loginForm input:required:valid{
+#accountForm input:required:valid{
     background-image: url(/images/site/valid.png);
     background-position: right top;
     background-repeat: no-repeat;
 }
 
-#loginForm input[type="submit"]{
+#accountForm input[type="submit"]{
     background-image: none !important;
     display: block;
     padding: 0.4rem 2rem;
@@ -62,18 +64,17 @@ main {
     margin: 1rem auto;
 }
 
-#loginForm input[type="submit"]:hover{
+#accountForm input[type="submit"]:hover{
     cursor: pointer;
 }
 
-#loginForm p{
+#accountForm p{
     text-align: center;
 }
 
-#loginForm p, #loginForm p > a  {
+#accountForm p, #accountForm p > a  {
     color: #fff;
 }
-
 
 label span{
     display: block;
@@ -83,4 +84,48 @@ label span{
 
 span#pswdBtn:hover{
     cursor: pointer;
+}
+
+/*************************************
+******** UDATE, PASSOWORD FORM STYLING 
+*************************************/
+#innerAccountForm {
+    border: 1px solid var(--accent-color2);
+    padding: var(--small-size);
+    margin: var(--small-size) auto;
+    border-radius: 0.5rem;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 1px 1px 5px #bbb;
+}
+
+#innerAccountForm label {
+    display: block;
+    margin-top: 1rem;
+}
+
+#innerAccountForm input[type="text"],
+#innerAccountForm input[type="email"],
+#innerAccountForm input[type="password"] {
+    display: block;
+    width: 100%;
+    padding: 0.5rem;
+    border: none;
+    color: #000;
+    font-size: 1rem;
+    border-radius: 0.2rem;
+    background-color: var(--accent-color2);
+}
+
+#innerAccountForm input[required] {
+    border-left: 3px solid #ff0000;
+}
+
+#innerinnerAccountForm input[type="submit"] {
+    transition: background-color 0.5s ease;
+}
+
+#innerAccountForm input[type="submit"]:hover {
+    background-color: #000;
+    color: #fff;
 }

@@ -10,34 +10,51 @@ const utilities = require('../utilities')
 const regValidate = require('../utilities/account-validation')
 const accountCont = require('../controllers/accountController')
 
-//Deliver account management
+//GET Account management view
 router.get('/',
     utilities.checkLogin,
     utilities.handleErrors(accountCont.buildAccountManagement)
 )
 
-//Deliver login
-router.get('/login', utilities.handleErrors(accountCont.buildLogin))
-
-//Deliver registration
-router.get('/register', utilities.handleErrors(accountCont.buildRegistration))
-
-//Logout
+//Logout Account
 router.get('/logout', utilities.handleErrors(accountCont.accountLogout))
 
 
-//Deliver login
+//GET login view
+router.get('/login', utilities.handleErrors(accountCont.buildLogin))
+//Login account
 router.post('/login', 
     regValidate.loginRules(),
     regValidate.checkLogData,
     utilities.handleErrors(accountCont.accountLogin)
 )
 
-//Regiser account
+//GET Registration Account view
+router.get('/register', utilities.handleErrors(accountCont.buildRegistration))
+//Register account
 router.post('/register',
     regValidate.registrationRules(),
     regValidate.checkRegData,
     utilities.handleErrors(accountCont.registerAccount)
+)
+
+//GET Edit Account view
+router.get('/update/:account_id',utilities.checkLogin,utilities.handleErrors(accountCont.buildEditAccount))
+//Update account
+router.post('/update/:account_id',
+    utilities.checkEmail,
+    regValidate.updateRules,
+    regValidate.checkUpdateData,
+    (req, res, next) => {
+        const { action } = req.body;
+        if (action === 'update-account') {
+            utilities.handleErrors(accountCont.updateAccount)
+        } else if (action === 'update-password') {
+            utilities.handleErrors(accountCont.updatePasswordAccount)
+        } else {
+            throw new Error("");
+        }
+    }
 )
 
 module.exports = router

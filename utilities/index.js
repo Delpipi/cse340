@@ -2,6 +2,7 @@ const invModel = require("../models/inventory-model")
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
 
+const accountModel = require('../models/account-model')
 const Util = {}
 
 /* *****************************
@@ -92,9 +93,9 @@ Util.buildClassificationList = async (classification_id = null) => {
 }
 
 
-/* ****************************************
+/******************************************
 * Middleware to check token validity
-**************************************** */
+******************************************/
 Util.checkJWTToken = async (req, res, next) => {
     if (req.cookies.jwt) {
         jwt.verify(
@@ -108,10 +109,9 @@ Util.checkJWTToken = async (req, res, next) => {
                 }
                 res.locals.accountData = accountData
                 res.locals.loggedin = 1
-                if (accountData.account_type === 'Client' ||
-                    accountData.account_type === 'client') {
+                if (accountData.account_type === 'Client') {
                     if (req.path === '/inv') {
-                        req.flash("notice", "Log in as Admin or Employee to access management view")
+                        req.flash("notice", "Log in as Admin or Employee to access account management view")
                         return res.redirect("/account/login")
                     }
                 }
@@ -120,17 +120,16 @@ Util.checkJWTToken = async (req, res, next) => {
         )
     } else {
         if (req.path === '/inv'){
-            req.flash("notice", "Log in as Admin or Employee to access management view")
+            req.flash("notice", "Log in as Admin or Employee to access inventory management view")
             return res.redirect("/account/login")
         }
         next()
     }
 }
 
-
 /* ****************************************
  *  Check Login
- * ************************************ */
+ * ****************************************/
 Util.checkLogin = (req, res, next) => {
     if (res.locals.loggedin) {
         next()
@@ -138,6 +137,34 @@ Util.checkLogin = (req, res, next) => {
         req.flash("notice", "Please log in.")
         return res.redirect("/account/login")
     }
+}
+
+/* ****************************************
+ *  Check Login
+ * ****************************************/
+Util.checkLogin = (req, res, next) => {
+    if (res.locals.loggedin) {
+        next()
+    } else {
+        req.flash("notice", "Please log in.")
+        return res.redirect("/account/login")
+    }
+}
+
+
+//Check email
+Util.checkEmail = async (req, res, next) => {
+    const { account_email } = req.body
+    if (res.locals.accountData) {
+        if (account_email != res.locals.accountData.account_email) {
+            const emailExists = await accountModel.checkExistingEmail(account_email)
+            if (emailExists) {
+                req.flash("notice", `Email: ${account_email} exists. Please use different email`)
+                return res.redirect(`/account/update/${res.locals.accountData.account_id}`)
+            }
+        }
+    }
+    next()
 }
 
 /* ****************************************

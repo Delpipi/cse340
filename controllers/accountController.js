@@ -50,6 +50,26 @@ accountCont.buildAccountManagement = async (req, res, next) => {
     })
 }
 
+/* ************************************
+ *  Build Edit view
+ * *************************************/
+accountCont.buildEditAccount = async (req, res, next) => {
+    let nav = await utilities.getNav()
+    const account = await accountModel.getAccountById(req.params.account_id)
+    res.render("./account/edit-account",
+        {
+            title: "Edit Account",
+            smallCssFile: "account.css",
+            largeCssFile: "account-large.css",
+            nav,
+            account_id: account.account_id,
+            account_firstname: account.account_firstname,
+            account_lastname: account.account_lastname,
+            account_email: account.account_email,
+            errors: null 
+        })
+}
+
 /* ****************************************
  *  Process register request
  * ************************************ */
@@ -127,7 +147,7 @@ accountCont.accountLogin = async (req, res) => {
 
     try {
         if (await bcrypt.compare(account_password, accountData.account_password)) {
-            delete accountData.account_lastname
+            delete accountData.account_password
             const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000})
             if (process.env.NODE_ENV === 'development') {
                 res.cookie("jwt", accessToken, {httpOnly: true, maxAge: 3600 * 1000 })
@@ -150,6 +170,67 @@ accountCont.accountLogin = async (req, res) => {
         throw new Error('Access Forbidden')
     }
 }
+
+/*****************************************
+ *  Process update account
+ ************************************* */
+accountCont.updateAccount = async (req, res) =>{
+    let nav = await utilities.getNav()
+    const { account_firstname, account_lastname, account_email, account_id } = req.body
+
+    const updateAccount = await accountModel.updateAccount(
+        account_firstname,
+        account_lastname,
+        account_email,
+        account_id
+    )
+
+    if (updateAccount) {
+        req.flash(
+            "notice",
+            `Account was successfull updated.`
+        )
+        res.status(201).redirect("/account")
+    } else {
+        req.flash("notice", "Sorry, the update failed.")
+        res.status(501).redirect("/account")
+    }
+}
+
+/* ****************************************
+ *  Process update passwordd request
+ * ************************************ */
+accountCont.updatePasswordAccount = async (req, res) =>{
+    let nav = await utilities.getNav()
+    const { account_id, account_password } = req.body
+
+    //Hash the password before storing
+    let hashedPassword
+    try {
+        //regular password and cost (salt is generated automatically)
+        hashedPassword = await bcrypt.hashSync(account_password, 10)
+    } catch (error) {
+        req.flash("error", "Sorry there was error processing registration.")
+        res.status(500).redirect("/account")
+    }
+    
+    const isUpdated = await accountModel.updatePasswordAccount(
+        account_id,
+        hashedPassword
+    )
+
+    if (isUpdated) {
+        req.flash(
+            "notice",
+            'Password was successfull updated.'
+        )
+        res.status(201).redirect("/account")
+    } else {
+        req.flash("notice", "The password update failed.")
+        res.status(501).redirect("/account")
+    }
+}
+
 
 /* **************************************
  *  Process logout request
