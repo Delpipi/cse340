@@ -21,6 +21,7 @@ const cookieParser = require("cookie-parser")
 const static = require("./routes/static")
 const inventoryRoute = require("./routes/inventoryRoute")
 const accountRoute = require("./routes/accountRoute")
+const reservationRoute = require('./routes/reservationRoute')
 const errorRoute = require("./routes/errorRoute")
 
 const baseController = require("./controllers/baseController")
@@ -78,6 +79,9 @@ app.use("/inv", inventoryRoute)
 
 //Account routes
 app.use("/account", accountRoute)
+
+//Reservation routes
+app.use("/reservation", reservationRoute)
 
 //500-type error route
 app.use("/error", errorRoute)

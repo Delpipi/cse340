@@ -46,3 +46,31 @@
     padding: 1rem;
     background-color: #eee;
 }
+
+
+/*************************************
+ ****** button reservation style *****
+ *************************************/
+.reserve-now{
+    margin-top: var(--massive-size);
+}
+
+#btn-reserve {
+    display: block;
+    background-image: none !important;
+    padding: var(--small-size) var(--massive-size);
+    border-radius: var(--large-size);
+    text-transform: uppercase;
+    border: none;
+    margin: var(--large-size) auto;
+    cursor: pointer;
+}
+
+#btn-reserve {
+    transition: background-color 0.5s ease;
+}
+
+#btn-reserve:hover {
+    background-color: #000;
+    color: #fff;
+}

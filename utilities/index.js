@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken")
 require("dotenv").config()
 
 const accountModel = require('../models/account-model')
+const reservationModel = require('../models/reservation-model')
 const Util = {}
 
 /* *****************************
@@ -70,7 +71,7 @@ Util.buildInventoryItemDetailsGrid = async function name(vehicle) {
         grid += '<p class="color">Color: ' + vehicle.inv_color + '</p>'
         grid += '<p class="miles"><b>Miles</b>: ' + new Intl.NumberFormat('en-US').format(vehicle.inv_miles) + '</p>'
         grid += '</div>'
-    
+
     return grid
 }
 
@@ -92,6 +93,43 @@ Util.buildClassificationList = async (classification_id = null) => {
     return classificationList
 }
 
+/*********************************
+* Build reservation datatable
+**********************************/
+Util.buildReservationDataTable = async (account_id = null) => {
+    let reservations = []
+
+    if (account_id) {
+        reservations = await reservationModel.getReservationListByAccountId(account_id)
+    } else {
+        reservations = await reservationModel.getReservationList()
+    }
+
+    let dataTable = ''
+
+    if (reservations.length > 0) {
+        // Set up the table labels
+        dataTable += '<thead>'
+        dataTable += '<tr><th>Vehcile Name</th><th>Quantity</th><th>Price</th><th>Action</th></tr>';
+        dataTable += '</thead>'
+        // Set up the table body
+        dataTable += '<tbody>'
+        // Iterate over all reservation in the array and put each in a row 
+        reservations.forEach(element => {
+            console.log(element.inventory_id + ", " + element.inventory_model)
+            dataTable += `<tr><td>${element.inventory_make} ${element.inventory_model}</td>`
+            dataTable += `<td>${element.inventory_qty}</td>`
+            dataTable += '<td>$'+ new Intl.NumberFormat('en-US').format(element.inventory_price) +'</td>' 
+            dataTable += `<td><a href='/reservation/delete/${element.res_id}' title='Click to delete'>Delete</a></td></tr>`
+        })
+        dataTable += '</tbody>'
+    } else {
+         dataTable += '<tbody><tr>There is no reservation</tr></tbody>'
+    }
+    
+    return dataTable
+}
+
 
 /******************************************
 * Middleware to check token validity
@@ -110,7 +148,7 @@ Util.checkJWTToken = async (req, res, next) => {
                 res.locals.accountData = accountData
                 res.locals.loggedin = 1
                 if (accountData.account_type === 'Client') {
-                    if (req.path === '/inv') {
+                    if (req.originalUrl.startsWith('/inv')) {
                         req.flash("notice", "Log in as Admin or Employee to access account management view")
                         return res.redirect("/account/login")
                     }
@@ -119,7 +157,7 @@ Util.checkJWTToken = async (req, res, next) => {
             }
         )
     } else {
-        if (req.path === '/inv'){
+        if(req.originalUrl.startsWith('/inv') || req.originalUrl.startsWith('/reservation')){
             req.flash("notice", "Log in as Admin or Employee to access inventory management view")
             return res.redirect("/account/login")
         }

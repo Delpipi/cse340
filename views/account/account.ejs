@@ -16,4 +16,10 @@
         <p><a href="/inv">Manage Inventory</a></p>
     <%}%>
 
+    <h3>Reservation Management</h3>
+    <% if(locals.accountData && locals.accountData.account_type !== "Client" ) { %>
+        <p><a href="/reservation/accounts">Reservation Management</a></p>
+    <%} else {%>
+        <p><a href="/reservation/accounts/<%= locals.accountData.account_id %>">Reservation Management</a></p>
+    <%}%>
 </div>

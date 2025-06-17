@@ -20,9 +20,22 @@ invCont.buildByClassificationId = async function (req, res, next) {
  * ******************************/
 invCont.buildInventoryItemDetails = async function (req, res, next) {
     const inventory_id = req.params.inventoryId
-    const vehicle = await invModel.getInventoryItemDetails(inventory_id)
-    const grid = await utilities.buildInventoryItemDetailsGrid(vehicle)
     let nav = await utilities.getNav()
+    const vehicle = await invModel.getInventoryItemDetails(inventory_id)
+    let grid = await utilities.buildInventoryItemDetailsGrid(vehicle)
+    if (res.locals.loggedin == 1) {
+        grid += '<div class="reserve-now">'
+        grid += `<button id="btn-reserve" 
+        data-inv-id=${vehicle.inv_id}
+        data-inv-make=${vehicle.inv_make}
+        data-inv-model=${vehicle.inv_model}
+        data-inv-thumbnail=${vehicle.inv_thumbnail}
+        data-inv-price=${vehicle.inv_price}
+        >
+        Reserve Now
+        </button>`
+        grid += '</div>'
+    }
     res.render("./inventory/inventory-item-details",
         {
             title: vehicle.inv_year + " " + vehicle.inv_make + " " + vehicle.inv_model,
@@ -243,7 +256,6 @@ invCont.buildDeleteInventory = async (req, res, next) => {
         )
     }
 }
-
 
 /* *******************************
  * Update inventory process

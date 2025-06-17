@@ -4,6 +4,13 @@
     res.redirect('/')
 } %>
 
-<%# messages() %>
+<ul class="notice">
+    <li id="message"></li>
+</ul>
+
+<input type="hidden" name="account_id" <% if(locals.loggedin) {%> value="<%= locals.accountData.account_id %>" <% } %>>
 
 <%- grid %>
+
+
+<script src="../../js/inventory-item-details.js"></script>

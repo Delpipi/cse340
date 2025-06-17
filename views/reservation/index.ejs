@@ -1,0 +1,14 @@
+<% if(title) { %>
+
+    <h1><%= title %></h1>
+
+<% } else { res.redirect('/') } %>
+
+<%- messages() %>
+
+<div class="container">
+    <h2>Total: $<%= total %></h2>
+    <table>
+        <%- dataTable %>
+    </table>
+</div>
