@@ -86,4 +86,38 @@ reservationCont.addReservation = async (req, res, next) => {
     }
 }
 
+
+reservationCont.deleteReservation = async (req, res, next) => {
+    //console.log(req.body)
+    try {
+        const { res_id } = req.params.reservation_id
+        console.log(res_id)
+
+        if (res_id) {
+
+            const data = await reservationModel.deleteReservationById(rservation_id)
+            
+            if (data) {
+                req.flash("notice", 'Deletion completed successfull.')
+                if (res.locals.accountData.account_type === 'Client') {
+                    res.status(201).redirect(`/reservation/accounts/${res.locals.accountData.account_id}`)
+                } else {
+                    res.status(201).redirect(`/reservation/accounts`)
+                }
+            } else {
+                req.flash("notice", 'Deletion failed.')
+                if (res.locals.accountData.account_type === 'Client') {
+                    res.status(501).redirect(`/reservation/accounts/${res.locals.accountData.account_id}`)
+                } else {
+                    res.status(501).redirect(`/reservation/accounts`)
+                }
+            }
+        }
+        
+    } catch (error) {
+        console.error(error)
+       throw new Error("")
+    }
+}
+
 module.exports = reservationCont

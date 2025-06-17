@@ -5,7 +5,7 @@ const pool = require('../database/')
 *******************************/
 async function getReservationListByAccountId(account_id) {
     try {
-        const sql = "SELECT inventory_id, inventory_make,inventory_model,inventory_thumbnail, inventory_price, inventory_qty FROM public.reservation WHERE account_id = $1"
+        const sql = "SELECT * FROM public.reservation WHERE account_id = $1"
         const data = await pool.query(sql, [account_id])
         return data.rows
     } catch (error) {
@@ -24,7 +24,7 @@ async function getReservationByAccountIdAndInventoryId(account_id, inventory_id)
 
 async function getReservationList() {
     try {
-        const sql = "SELECT account_id, inventory_id, inventory_make,inventory_model,inventory_thumbnail, inventory_price, inventory_qty FROM public.reservation"
+        const sql = "SELECT * FROM public.reservation"
         return await pool.query(sql)
     } catch (error) {
         console.error('getReservationList error ' + error)

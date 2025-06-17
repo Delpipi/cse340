@@ -120,7 +120,7 @@ Util.buildReservationDataTable = async (account_id = null) => {
             dataTable += `<tr><td>${element.inventory_make} ${element.inventory_model}</td>`
             dataTable += `<td>${element.inventory_qty}</td>`
             dataTable += '<td>$'+ new Intl.NumberFormat('en-US').format(element.inventory_price) +'</td>' 
-            dataTable += `<td><a href='/reservation/delete/${element.res_id}' title='Click to delete'>Delete</a></td></tr>`
+            dataTable += `<td><a href='#'>Delete</a></td></tr>`
         })
         dataTable += '</tbody>'
     } else {

@@ -16,6 +16,6 @@ const reservationCont = require('../controllers/reservationController')
 router.get('/accounts/:account_id', utilities.handleErrors(reservationCont.buildReservation))
 router.post('/', utilities.handleErrors(reservationCont.getReservationJSON))
 router.post('/accounts/:account_id', utilities.handleErrors(reservationCont.addReservation))
-//router.post('/reservation/:reservation_id', utilities.handleErrors(reservationCont.deleteReservation))
+router.post('/delete/:reservation_id', utilities.handleErrors(reservationCont.deleteReservation))
 
 module.exports = router;
