@@ -1,5 +1,5 @@
 const btnReserve = document.querySelector('#btn-reserve');
-const message = document.querySelector('#message');
+const messages = document.querySelector('#messages');
 
 const accountId = document.querySelector('input[name="account_id"]').value;
 const inventoryId = btnReserve.dataset.invId;
@@ -7,23 +7,6 @@ const inventoryMake = btnReserve.dataset.invMake;
 const inventoryModel = btnReserve.dataset.invModel;
 const inventoryThumbnail = btnReserve.dataset.invThumbnail;
 const inventoryPrice = btnReserve.dataset.invPrice;
-
-async function getReservationByAccountIdAndInventoryId(accountId, inventoryId) {
-    try {
-        
-        const response = await fetch('/reservation', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({"account_id": accountId,"inventory_id": inventoryId})
-        });
-    
-        return response;
-    } catch (error) {
-        console.error('Get Reservation by AccountId and inventoryId ' +error)
-    }
-}
 
 async function addReservation(data) {
     try {
@@ -52,14 +35,7 @@ btnReserve.addEventListener('click', async () => {
     }
 
     try {
-        const res = await getReservationByAccountIdAndInventoryId(accountId, inventoryId);
         
-        let inventory_qty = 1;
-        
-        if (res.ok) {
-            inventory_qty = res.inventory_qty + 1;
-        }
-
         const data = {
             "account_id": accountId,
             "inventory_id": inventoryId,
@@ -67,11 +43,18 @@ btnReserve.addEventListener('click', async () => {
             "inventory_model": inventoryModel,
             "inventory_thumbnail": inventoryThumbnail,
             "inventory_price": inventoryPrice,
-            "inventory_qty": inventory_qty
+            "inventory_qty": 1
         }
 
         const response = await addReservation(data);
-        message.textContent = await response.text();
+        if (response.status === 400) {
+            let errorData = await response.json();
+            messages.innerHTML = errorData.errors.map(error => `<li>${error.msg}</li>`).join("");
+        } else {
+            const message = await response.text();
+            messages.innerHTML = `<li>${message}</li>`;
+        }
+
     } catch (error) {
         console.error(error)
     }

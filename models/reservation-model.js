@@ -54,6 +54,30 @@ async function addReservation(account_id, inventory_id, inventory_make,inventory
     
 }
 
+async function updateReservation(res_id, account_id, inventory_id, inventory_make,inventory_model,inventory_thumbnail, inventory_price, inventory_qty) {
+    
+    try {
+        const sql = "UPDATE public.reservation SET account_id = $1, inventory_id = $2,inventory_make = $3, inventory_model = $4, inventory_thumbnail = $5, inventory_price = $6, inventory_qty = $7 WHERE res_id = $8 RETURNING *"
+    
+        const data = await pool.query(sql, [
+            account_id,
+            inventory_id,
+            inventory_make,
+            inventory_model,
+            inventory_thumbnail,
+            inventory_price,
+            inventory_qty,
+            res_id
+        ]);
+    
+        return data.rows[0]
+
+    } catch (error) {
+         console.error('addReservation error ' + error)
+    }
+    
+}
+
 async function deleteReservationById(res_id) {
     try {
         const sql = 'DELETE FROM public.reservation WHERE res_id = $1'
@@ -76,6 +100,6 @@ async function getReservationTotalCost() {
 }
 
 module.exports = {
-    getReservationListByAccountId, getReservationList, addReservation, deleteReservationById,
+    getReservationListByAccountId, getReservationList, addReservation, updateReservation, deleteReservationById,
     getReservationTotalCostByAccountId, getReservationTotalCost, getReservationByAccountIdAndInventoryId
 }

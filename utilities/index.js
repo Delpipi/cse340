@@ -120,7 +120,13 @@ Util.buildReservationDataTable = async (account_id = null) => {
             dataTable += `<tr><td>${element.inventory_make} ${element.inventory_model}</td>`
             dataTable += `<td>${element.inventory_qty}</td>`
             dataTable += '<td>$'+ new Intl.NumberFormat('en-US').format(element.inventory_price) +'</td>' 
-            dataTable += `<td><a href='#'>Delete</a></td></tr>`
+            dataTable += `<td>
+            <form action="/reservation/delete" method="POST">
+            <input type="hidden" name="res_id" value="${element.res_id}" >
+            <button type="submit">Delete</button>
+            </form>
+            </td>`
+            dataTable += '</tr>'
         })
         dataTable += '</tbody>'
     } else {
@@ -148,8 +154,8 @@ Util.checkJWTToken = async (req, res, next) => {
                 res.locals.accountData = accountData
                 res.locals.loggedin = 1
                 if (accountData.account_type === 'Client') {
-                    if (req.originalUrl.startsWith('/inv')) {
-                        req.flash("notice", "Log in as Admin or Employee to access account management view")
+                    if ( (req.path === '/inv' || req.path === '/inv/')) {
+                        req.flash("notice", "Log in as Admin or Employee to access inventory management view")
                         return res.redirect("/account/login")
                     }
                 }
@@ -157,8 +163,10 @@ Util.checkJWTToken = async (req, res, next) => {
             }
         )
     } else {
-        if(req.originalUrl.startsWith('/inv') || req.originalUrl.startsWith('/reservation')){
-            req.flash("notice", "Log in as Admin or Employee to access inventory management view")
+        if (req.path === '/inv' || req.path === '/inv/'
+            || req.path === '/account' || req.path === '/account/'
+            || req.originalUrl.startsWith('/reservation')) {
+            req.flash("notice", "Please Log in to access view")
             return res.redirect("/account/login")
         }
         next()

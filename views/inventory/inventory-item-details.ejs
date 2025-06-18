@@ -4,8 +4,8 @@
     res.redirect('/')
 } %>
 
-<ul class="notice">
-    <li id="message"></li>
+<ul class="notice" id="messages">
+    
 </ul>
 
 <input type="hidden" name="account_id" <% if(locals.loggedin) {%> value="<%= locals.accountData.account_id %>" <% } %>>
