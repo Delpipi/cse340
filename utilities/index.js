@@ -221,3 +221,11 @@ Util.checkEmail = async (req, res, next) => {
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
 
 module.exports = Util
+
+/* app.use((err, req, res, next) => {
+  console.error(err.stack); // for debugging
+  res.status(err.status || 500).json({
+    success: false,
+    message: err.message || 'Internal Server Error',
+  });
+}); */
